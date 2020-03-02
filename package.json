@@ -1,0 +1,29 @@
+{
+  "name": "expense-calculator",
+  "version": "1.0.0",
+  "description": "A SPA using React, Node, Express, and PostgreSQL that includes Google OAuth workflows.",
+  "main": "index.js",
+  "dependencies": {
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.4.2",
+    "express": "^4.17.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tmunayyer/expense-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tmunayyer/expense-calculator/issues"
+  },
+  "homepage": "https://github.com/Tmunayyer/expense-calculator#readme"
+}
