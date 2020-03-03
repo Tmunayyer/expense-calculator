@@ -14,40 +14,53 @@ const makeOAuth2Client = () => {
 const helpers = {};
 
 helpers.generateToken = (code, cb) => {
-  const oAuth2Client = makeOAuth2Client();
+  return new Promise((accept, reject) => {
+    const oAuth2Client = makeOAuth2Client();
 
-  oAuth2Client.getToken(code, (err, token) => {
-    cb(err, token);
+    oAuth2Client.getToken(code, (err, token) => {
+      if (err) return reject(err);
+
+      accept(token);
+    });
   });
 };
 
 helpers.getAuthURI = (cb) => {
-  const oAuth2Client = makeOAuth2Client();
+  /**
+   * pretty sure they are just formatting a string for us here
+   *  wchich is why there is no call back needed and no use of
+   *  reject
+   */
+  return new Promise((accept, reject) => {
+    const oAuth2Client = makeOAuth2Client();
 
-  const authURI = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES
+    const authURI = oAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: SCOPES
+    });
+
+    accept(authURI);
   });
-
-  cb(authURI);
 };
 
 helpers.getUserInfo = (token, cb) => {
-  let oAuth2Client = makeOAuth2Client();
+  return new Promise((accept, reject) => {
+    let oAuth2Client = makeOAuth2Client();
 
-  oAuth2Client.setCredentials(token);
+    oAuth2Client.setCredentials(token);
 
-  let withAuth = google.oauth2({
-    auth: oAuth2Client,
-    version: 'v2'
-  });
+    let withAuth = google.oauth2({
+      auth: oAuth2Client,
+      version: 'v2'
+    });
 
-  withAuth.userinfo.v2.me.get((err, data) => {
-    if (err) {
-      return cb(err, data);
-    }
+    withAuth.userinfo.v2.me.get((err, data) => {
+      if (err) {
+        return reject(err);
+      }
 
-    cb(null, data);
+      accept(data);
+    });
   });
 };
 
