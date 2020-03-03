@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setCount } from './state/actions';
+import { stateSelector } from './state/interface.js';
+import { appSelector, appActions } from './app-state.js';
 
 export const _App = (props) => {
   const { count, setCount } = props;
@@ -14,15 +15,11 @@ export const _App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    count: state.counter.count
-  };
-};
-
-const mapDispatchToProps = { setCount };
-
 export const App = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  stateSelector({
+    count: appSelector((store) => store.count)
+  }),
+  {
+    setCount: appActions.setCount
+  }
 )(_App);
