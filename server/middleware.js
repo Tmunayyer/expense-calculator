@@ -13,8 +13,8 @@ const express_static = express.static('public');
 const middleware = [express_static];
 
 const configureMiddleware = (app) => {
-  middleware.forEach((_) => {
-    app.use(_);
+  middleware.forEach((elem) => {
+    app.use(elem);
   });
 
   return app;
