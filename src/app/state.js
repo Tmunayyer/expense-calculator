@@ -1,4 +1,4 @@
-import { mapState } from './state/interface';
+import { mapState } from '../state/interface';
 
 export const [appSelector, appActions] = mapState('App', {
   initial: {

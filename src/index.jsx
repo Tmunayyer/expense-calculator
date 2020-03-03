@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App } from './app.jsx';
+import { App } from './app/app.jsx';
 
 /**
  * This must come after the App as we need it to initialize

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { stateSelector } from './state/interface.js';
-import { appSelector, appActions } from './app-state.js';
+import { stateSelector } from '../state/interface.js';
+import { appSelector, appActions } from './state.js';
 
 export const _App = (props) => {
   const { count, setCount } = props;
