@@ -28,10 +28,10 @@ datastore.User = {
       const { fullName, firstName, lastName } = gUserData;
 
       const insertUser = `
-        insert into user set
-            full_name = $1,
-            first_name = $2,
-            last_name = $3
+        insert into "user"
+            (full_name, first_name, last_name)
+        values
+            ($1, $2, $3)
         returning *
     `;
 
