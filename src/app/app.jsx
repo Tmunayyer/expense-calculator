@@ -5,6 +5,7 @@ import { stateSelector } from '../state/interface.js';
 import { appSelector, appActions } from './state.js';
 
 import { SigninPage } from '../signin-page/signin-page.jsx';
+import { CalculatorPage } from '../calculator-page/calculator-page.jsx';
 
 export const App = connect(
   stateSelector({
@@ -20,10 +21,5 @@ export const App = connect(
     return <SigninPage />;
   }
 
-  return (
-    <div>
-      <div>{`the count: ${count}`}</div>
-      <button onClick={() => setCount(count + 1)}>count</button>
-    </div>
-  );
+  return <CalculatorPage />;
 });
