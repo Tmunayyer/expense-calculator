@@ -1,4 +1,5 @@
 const google = require('./utility/google');
+const datastore = require('./datastore.js');
 
 const handleInternalServerError = (res) => {
   res.send('error');
@@ -26,6 +27,14 @@ const authRoutes = [
         const token = await google.generateToken(code);
 
         const { data } = await google.getUserInfo(token);
+
+        const userData = await datastore.User.insertUser({
+          fullName: data.name,
+          firstName: data.given_name,
+          lastName: data.family_name
+        });
+
+        console.log('the userData:', userData);
 
         res.send(data);
       } catch (err) {
