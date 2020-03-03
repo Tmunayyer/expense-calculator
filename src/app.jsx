@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
-export const App = () => {
-  const [count, setCount] = useState(0);
+import { setCount } from './state/actions';
+
+export const _App = (props) => {
+  const { count, setCount } = props;
+
   return (
     <div>
       <div>{`the count: ${count}`}</div>
@@ -9,3 +13,16 @@ export const App = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    count: state.counter.count
+  };
+};
+
+const mapDispatchToProps = { setCount };
+
+export const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(_App);
