@@ -10,18 +10,18 @@ const datastore = {};
  *  the user table.
  */
 datastore.User = {
-  getUser: (userId) => {
+  getUser: async (userId) => {
     const selectUser = `
         select
             *
-        from user
+        from "user"
         where id = $1;
     `;
     const params = [userId];
 
-    const result = query(null, selectUser, params);
+    const result = await query(null, selectUser, params);
 
-    console.log('the result:', result);
+    return result[0];
   },
   insertUser: async (gUserData) => {
     try {
@@ -37,10 +37,9 @@ datastore.User = {
 
       const params = [fullName, firstName, lastName];
 
-      console.log('before query:');
       const result = await query(null, insertUser, params);
 
-      console.log('the result:', result);
+      return result[0];
     } catch (err) {
       console.log('ERROR: inserting the user...', err);
     }

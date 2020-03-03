@@ -28,15 +28,19 @@ const authRoutes = [
 
         const { data } = await google.getUserInfo(token);
 
+        // create the user in the DB
         const userData = await datastore.User.insertUser({
           fullName: data.name,
           firstName: data.given_name,
           lastName: data.family_name
         });
 
-        console.log('the userData:', userData);
-
-        res.send(data);
+        // save the user id to the session
+        req.session.app_id = userData.id;
+        req.session.save(() => {
+          // response
+          res.redirect('/');
+        });
       } catch (err) {
         handleInternalServerError(res);
       }

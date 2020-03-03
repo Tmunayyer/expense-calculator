@@ -1,26 +1,36 @@
 const { authRoutes } = require('./auth.js');
+const datastore = require('./datastore.js');
 
-// const api_twits = {
-//   endpoint: '/api/twits',
+const api = {
+  endpoint: '/api/user',
 
-//   // =================
+  // =================
 
-//   get: (req, res) => {},
+  get: async (req, res) => {
+    if (!req.session || !req.session.app_id) {
+      res.send({ message: 'failed', data: null });
+      return;
+    }
 
-//   // =================
+    const user = await datastore.User.getUser(req.session.app_id);
 
-//   post: (req, res) => {},
+    res.send({ message: 'success', data: user });
+  },
 
-//   // =================
+  // =================
 
-//   put: (req, res) => {},
+  post: false,
 
-//   // =================
+  // =================
 
-//   remove: (req, res) => {}
-// };
+  put: false,
 
-const routes = [...authRoutes];
+  // =================
+
+  remove: false
+};
+
+const routes = [...authRoutes, api];
 
 /**
  * Takes in the express app obect and configures the handlers to

@@ -38,7 +38,7 @@ const query = async (client, statement, params) => {
 
     const result = await localClient.query(statement, params);
 
-    return result;
+    return result.rows;
   } catch (err) {
     console.log('ERROR: from the query function...', err);
   } finally {
