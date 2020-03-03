@@ -4,8 +4,21 @@ import { connect } from 'react-redux';
 import { stateSelector } from '../state/interface.js';
 import { appSelector, appActions } from './state.js';
 
-export const _App = (props) => {
-  const { count, setCount } = props;
+import { SigninPage } from '../signin-page/signin-page.jsx';
+
+export const App = connect(
+  stateSelector({
+    user: appSelector((store) => store.user)
+  }),
+  {
+    setUser: appActions.setUser
+  }
+)(function(props) {
+  const { user, setUser } = props;
+
+  if (!user) {
+    return <SigninPage />;
+  }
 
   return (
     <div>
@@ -13,13 +26,4 @@ export const _App = (props) => {
       <button onClick={() => setCount(count + 1)}>count</button>
     </div>
   );
-};
-
-export const App = connect(
-  stateSelector({
-    count: appSelector((store) => store.count)
-  }),
-  {
-    setCount: appActions.setCount
-  }
-)(_App);
+});

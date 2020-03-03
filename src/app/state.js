@@ -2,13 +2,13 @@ import { mapState } from '../state/interface';
 
 export const [appSelector, appActions] = mapState('App', {
   initial: {
-    count: 0
+    user: null
   },
   actions: {
-    setCount: (store, result) => {
+    setUser: (store, result) => {
       const newStoreObj = { ...store };
 
-      newStoreObj.count = result;
+      newStoreObj.user = result;
 
       return newStoreObj;
     }
