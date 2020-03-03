@@ -1,3 +1,5 @@
+const { authRoutes } = require('./auth.js');
+
 // const api_twits = {
 //   endpoint: '/api/twits',
 
@@ -18,7 +20,7 @@
 //   remove: (req, res) => {}
 // };
 
-const routes = [];
+const routes = [...authRoutes];
 
 /**
  * Takes in the express app obect and configures the handlers to
