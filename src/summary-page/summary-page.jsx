@@ -5,7 +5,8 @@ import { stateSelector } from '../state/interface.js';
 import { appSelector, appActions } from '../app/state.js';
 import { calcSelector } from '../calculator-page/state.js';
 
-import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
+import { PageWrapper, PageHeader, PageBody } from '../component-lib/pages.jsx';
+import { Avatar } from '../component-lib/avatar.jsx';
 import { Title } from '../component-lib/title.jsx';
 import { LabelAndValue } from '../component-lib/label-and-value.jsx';
 import { Button } from '../component-lib/button.jsx';
@@ -30,6 +31,10 @@ export const SummaryPage = connect(
 
   return (
     <PageWrapper>
+      <PageHeader>
+        <Avatar src={user.avatar} name={user.full_name} />
+      </PageHeader>
+
       <PageBody>
         <Title title={`Thank you ${user.first_name}.`} />
 
