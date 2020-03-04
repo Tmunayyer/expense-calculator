@@ -2,8 +2,8 @@ const { authRoutes } = require('./auth.js');
 const datastore = require('./datastore.js');
 
 const api = {
-  endpoint: '/api/user',
-
+  // =================
+  /** */ endpoint: '/api/user',
   // =================
 
   get: async (req, res) => {

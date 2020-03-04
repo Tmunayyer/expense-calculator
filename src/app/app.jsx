@@ -18,39 +18,37 @@ export const App = connect(
     setUser: appActions.setUser,
     setLoading: appActions.setLoading
   }
-)(
-  class App extends React.PureComponent {
-    componentDidMount() {
-      const { setUser, setLoading } = this.props;
+)(function App(props) {
+  // props
+  const { loading, user } = props;
 
-      async function fetchUser() {
-        try {
-          const uri = '/api/user';
-          const { data } = await axios.get(uri);
+  // actions
+  const { setUser, setLoading } = props;
 
-          setUser(data.data);
-          setLoading(false);
-        } catch (err) {
-          console.log('ERROR: fetching user...', err);
-          return null;
-        }
-      }
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const uri = '/api/user';
+        const { data } = await axios.get(uri);
 
-      fetchUser();
-    }
-
-    render() {
-      const { loading, user } = this.props;
-
-      if (loading) {
+        setUser(data.data);
+        setLoading(false);
+      } catch (err) {
+        console.log('ERROR: fetching user...', err);
         return null;
       }
-
-      if (!user) {
-        return <SigninPage />;
-      }
-
-      return <CalculatorPage />;
     }
+
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return null;
   }
-);
+
+  if (!user) {
+    return <SigninPage />;
+  }
+
+  return <CalculatorPage />;
+});
