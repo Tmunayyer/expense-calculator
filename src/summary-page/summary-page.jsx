@@ -36,7 +36,7 @@ export const SummaryPage = connect(
         <LabelAndValue label={'Your Election'} value={`${election * 100}%`} />
         <LabelAndValue
           label={'Your Salary'}
-          value={`$${formatCurrency(salary.toFixed(2))}`}
+          value={`$${formatCurrency(parseInt(salary).toFixed(2))}`}
         />
         <LabelAndValue
           label={'Your Expense'}
