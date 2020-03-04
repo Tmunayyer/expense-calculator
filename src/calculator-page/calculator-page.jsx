@@ -8,6 +8,33 @@ import { calcSelector, calcActions } from './state.js';
 import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
 import { ExpenseSlider } from './slider.jsx';
 
+const formatCurrency = (num) => {
+  const str = num.toString();
+
+  let output = '';
+
+  // every 3 chars add a ,
+  let count = 0;
+
+  for (let i = str.length - 1; i >= 0; i--) {
+    const char = str[i];
+
+    output = char + output;
+    count++;
+
+    if (char === '.') {
+      count = 0;
+    }
+
+    if (count === 3 && i !== 0) {
+      output = ',' + output;
+      count = 0;
+    }
+  }
+
+  return output;
+};
+
 /**
  * Validation to ensure the input is in fact a number. We cant
  *  rely on parseInt alone since 100abc will return 100.
@@ -83,7 +110,7 @@ const Expense = connect(
   return (
     <>
       <div>Your Expense</div>
-      <div>{expense}</div>
+      <div>${formatCurrency(expense.toFixed(2))}</div>
     </>
   );
 });
@@ -99,7 +126,7 @@ const Savings = connect(
   return (
     <>
       <div>Your Savings</div>
-      <div>{savings}</div>
+      <div>${formatCurrency(savings.toFixed(2))}</div>
     </>
   );
 });
