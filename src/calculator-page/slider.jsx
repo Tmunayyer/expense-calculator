@@ -25,12 +25,11 @@ export const ExpenseSlider = connect(
     <div className="slider-container">
       <Slider
         min={0}
-        max={100}
+        max={30}
         startPoint={0}
-        defaultValue={15}
-        value={slider}
+        value={slider * 100}
         onChange={(val) => {
-          setSlider(val);
+          setSlider(val / 100);
         }}
       />
     </div>

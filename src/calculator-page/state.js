@@ -2,7 +2,7 @@ import { mapState } from '../state/interface';
 
 export const [calcSelector, calcActions] = mapState('Calculator', {
   initial: {
-    slider: 15,
+    slider: 0.05,
     salary: 0
   },
   actions: {

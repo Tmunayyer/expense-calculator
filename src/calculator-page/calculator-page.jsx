@@ -56,6 +56,7 @@ const SalaryInput = connect(
 
   return (
     <>
+      <span>Your Salary</span>
       <input
         value={salary}
         onChange={(e) => {
@@ -71,6 +72,29 @@ const SalaryInput = connect(
   );
 });
 
+const Expense = connect(
+  stateSelector({
+    salary: calcSelector((store) => store.salary),
+    slider: calcSelector((store) => store.slider)
+  }),
+  null
+)(function Expense(props) {
+  const { salary, slider } = props;
+
+  const calculateExpense = (salary, percentage) => {
+    const expense = Math.trunc((salary / 12) * percentage * 100) / 100;
+
+    return expense;
+  };
+
+  return (
+    <>
+      <div>Your Expense</div>
+      <div>{calculateExpense(salary, slider)}</div>
+    </>
+  );
+});
+
 export const CalculatorPage = connect(
   null,
   null
@@ -81,7 +105,7 @@ export const CalculatorPage = connect(
         <WelcomeTitle />
         <ExpenseSlider />
         <SalaryInput />
-        {/* expense calc */}
+        <Expense />
         {/* saving calc */}
 
         {/* save/reset button */}
