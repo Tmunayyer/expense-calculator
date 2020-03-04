@@ -28,9 +28,6 @@ export const mapState = (stateName, mechanism) => {
     // prevent common reducer name collision
     if (predicate !== stateName) return state;
 
-    // for dev purposes
-    console.log(_action);
-
     if (mechanism.actions[actionType]) {
       return mechanism.actions[actionType](state, _action.payload);
     }

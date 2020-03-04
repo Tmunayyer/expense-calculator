@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
 
@@ -21,10 +20,7 @@ const Title = () => {
   return <div className="sign-in-title">Expense Calculator</div>;
 };
 
-export const SigninPage = connect(
-  null,
-  null
-)(function(props) {
+export function SigninPage(props) {
   return (
     <PageWrapper>
       <PageBody>
@@ -35,4 +31,4 @@ export const SigninPage = connect(
       </PageBody>
     </PageWrapper>
   );
-});
+}
