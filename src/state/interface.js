@@ -23,11 +23,13 @@ export const mapState = (stateName, mechanism) => {
 
   // redux recognizable reducer using name and mechanism inputs
   _globalState[stateName] = (state = mechanism.initial, _action) => {
-    // for development purposes
-    console.log(_action);
+    const [predicate, actionType] = _action.type.split(':');
 
-    const splitter = _action.type.indexOf(':') + 1;
-    const actionType = _action.type.slice(splitter, _action.type.length);
+    // prevent common reducer name collision
+    if (predicate !== stateName) return state;
+
+    // for dev purposes
+    console.log(_action);
 
     if (mechanism.actions[actionType]) {
       return mechanism.actions[actionType](state, _action.payload);
