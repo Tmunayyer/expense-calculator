@@ -14,7 +14,7 @@ const calculateSavings = (salary, percentage) => {
 
 export const [calcSelector, calcActions] = mapState('Calculator', {
   initial: {
-    slider: 0.05,
+    slider: 0.15,
     salary: 0,
     expense: 0,
     savings: 0
@@ -45,6 +45,15 @@ export const [calcSelector, calcActions] = mapState('Calculator', {
       newStoreObj.savings = savings;
 
       return newStoreObj;
+    },
+    reset: (_store) => {
+      return {
+        ..._store,
+        slider: 0.15,
+        salary: 0,
+        expense: 0,
+        savings: 0
+      };
     }
   }
 });

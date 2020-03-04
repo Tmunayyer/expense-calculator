@@ -138,6 +138,16 @@ const Savings = connect(
   );
 });
 
+const ResetButton = connect(
+  null,
+  { reset: calcActions.reset }
+)(function ResetButton(props) {
+  //actions
+  const { reset } = props;
+
+  return <button onClick={reset}>Reset</button>;
+});
+
 export const CalculatorPage = connect(
   null,
   null
@@ -146,12 +156,13 @@ export const CalculatorPage = connect(
     <PageWrapper>
       <PageBody>
         <WelcomeTitle />
+
         <ExpenseSlider />
         <SalaryInput />
         <Expense />
         <Savings />
 
-        {/* save/reset button */}
+        <ResetButton />
       </PageBody>
     </PageWrapper>
   );
