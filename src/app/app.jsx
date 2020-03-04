@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { stateSelector } from '../state/interface.js';
 import { appSelector, appActions } from './state.js';
+import { calcActions } from '../calculator-page/state.js';
 
 import { SigninPage } from '../signin-page/signin-page.jsx';
 import { CalculatorPage } from '../calculator-page/calculator-page.jsx';
@@ -16,22 +17,30 @@ export const App = connect(
   }),
   {
     setUser: appActions.setUser,
-    setLoading: appActions.setLoading
+    setLoading: appActions.setLoading,
+    loadCalcData: calcActions.loadData
   }
 )(function App(props) {
   // props
   const { loading, user } = props;
 
   // actions
-  const { setUser, setLoading } = props;
+  const { setUser, setLoading, loadCalcData } = props;
 
   useEffect(() => {
     async function fetchUser() {
       try {
-        const uri = '/api/user';
-        const { data } = await axios.get(uri);
+        const userURI = '/api/user';
+        const { data: user } = await axios.get(userURI);
+        setUser(user.data);
 
-        setUser(data.data);
+        if (user.message === 'success') {
+          // we have a user, pre-emptively grab potential calculator data
+          const calcDataURI = '/api/calculator-data';
+          const { data: calculator } = await axios.get(calcDataURI);
+          loadCalcData(calculator.data);
+        }
+
         setLoading(false);
       } catch (err) {
         console.log('ERROR: fetching user...', err);

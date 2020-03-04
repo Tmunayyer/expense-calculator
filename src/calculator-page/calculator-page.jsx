@@ -162,7 +162,6 @@ const SaveButton = connect(
 
   const save = async (payload) => {
     const URI = '/api/calculator-data';
-    console.log('the payload:', payload);
 
     const response = await axios({
       method: 'post',
@@ -172,7 +171,6 @@ const SaveButton = connect(
       },
       params: payload
     });
-    console.log('the response:', response);
   };
 
   return (

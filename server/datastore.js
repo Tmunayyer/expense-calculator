@@ -13,7 +13,10 @@ datastore.User = {
   getUser: async (userId) => {
     const selectUser = `
         select
-            *
+            id,
+            full_name,
+            first_name,
+            last_name
         from "user"
         where id = $1;
     `;

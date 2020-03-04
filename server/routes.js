@@ -6,7 +6,6 @@ const api = [
     // =================
     /** */ endpoint: '/api/user',
     // =================
-
     get: async (req, res) => {
       if (!req.session || !req.session.app_id) {
         res.send({ message: 'failed', data: null });
@@ -23,7 +22,6 @@ const api = [
     // =================
     /** */ endpoint: '/api/calculator-data',
     // =================
-
     get: async (req, res) => {
       try {
         const userId = req.session.app_id;

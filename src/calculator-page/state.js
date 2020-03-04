@@ -20,6 +20,20 @@ export const [calcSelector, calcActions] = mapState('Calculator', {
     savings: 0
   },
   actions: {
+    loadData: (_store, result) => {
+      const { election: slider, salary } = result;
+
+      const expense = calculateExpense(salary, slider);
+      const savings = calculateSavings(salary, slider);
+
+      return {
+        ..._store,
+        slider,
+        salary,
+        expense,
+        savings
+      };
+    },
     setSlider: (_store, result) => {
       const newStoreObj = { ..._store, slider: result };
 
