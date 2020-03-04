@@ -4,6 +4,8 @@
     ===========
 */
 
+/* #f28a1b */
+
 html {
   height: 100%;
   width: 100%;
@@ -12,6 +14,8 @@ html {
 body {
   height: 100%;
   width: 100%;
+
+  background-color: #cacaca1c;
 }
 
 #root {
@@ -156,10 +160,19 @@ body {
   padding-top: 1em;
 }
 
+.summary-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 17%;
+  padding-top: 1em;
+}
+
 .calculator-button {
-  background-color: #4caf50; /* Green */
+  background-color: #f28a1b; /* Green */
   border: none;
-  color: white;
+  color: black;
   padding: 5px 12px;
   text-align: center;
   text-decoration: none;

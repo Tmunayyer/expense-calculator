@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function WelcomeTitle(props) {
+export function Title(props) {
   // passed down
   const { title } = props;
 

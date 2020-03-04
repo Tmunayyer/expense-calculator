@@ -36,6 +36,15 @@ export const ExpenseSlider = connect(
             label: 'Max: 30%'
           }
         }}
+        trackStyle={{
+          backgroundColor: '#f28a1b'
+        }}
+        handleStyle={{
+          borderColor: '#f28a1b'
+        }}
+        dotStyle={{
+          borderColor: '#f28a1b'
+        }}
         min={0}
         max={30}
         startPoint={0}

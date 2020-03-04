@@ -4,47 +4,16 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { stateSelector } from '../state/interface.js';
-import { appSelector } from '../app/state.js';
+import { appSelector, appActions } from '../app/state.js';
 import { calcSelector, calcActions } from './state.js';
 
 import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
-import { WelcomeTitle } from '../component-lib/title.jsx';
+import { Title } from '../component-lib/title.jsx';
 import { LabelAndValue } from '../component-lib/label-and-value.jsx';
 import { Button } from '../component-lib/button.jsx';
 import { ExpenseSlider } from './slider.jsx';
 
-/**
- * Takes in the number and produces a currency formatted
- *  string for display.
- *
- * @param {*} num
- */
-const formatCurrency = (num) => {
-  const str = num.toString();
-
-  let output = '';
-
-  // every 3 chars add a ,
-  let count = 0;
-
-  for (let i = str.length - 1; i >= 0; i--) {
-    const char = str[i];
-
-    output = char + output;
-    count++;
-
-    if (char === '.') {
-      count = 0;
-    }
-
-    if (count === 3 && i !== 0) {
-      output = ',' + output;
-      count = 0;
-    }
-  }
-
-  return output;
-};
+import { formatCurrency } from '../helpers/format-currency.js';
 
 /**
  * Validation to ensure the input is in fact a number. We cant
@@ -112,18 +81,18 @@ export const CalculatorPage = connect(
     expense: calcSelector((store) => store.expense),
     savings: calcSelector((store) => store.savings)
   }),
-  { reset: calcActions.reset, setFinished: calcActions.setFinished }
+  { reset: calcActions.reset, setUserState: appActions.setUserState }
 )(function(props) {
   // props
   const { user, expense, savings, slider, salary } = props;
 
   // actions
-  const { reset } = props;
+  const { reset, setUserState } = props;
 
   const save = async (payload) => {
     const URI = '/api/calculator-data';
 
-    const { message } = await axios({
+    const { data } = await axios({
       method: 'post',
       url: URI,
       headers: {
@@ -132,17 +101,15 @@ export const CalculatorPage = connect(
       params: payload
     });
 
-    if (message === 'success') {
-      setFinished(true);
+    if (data.message === 'success') {
+      setUserState('finished');
     }
   };
 
   return (
     <PageWrapper>
       <PageBody>
-        <WelcomeTitle
-          title={`Welcome to your monthly budget ${user.first_name}.`}
-        />
+        <Title title={`Welcome to your monthly budget ${user.first_name}.`} />
 
         <ExpenseSlider />
         <SalaryInput />

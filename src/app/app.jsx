@@ -14,7 +14,8 @@ import { SummaryPage } from '../summary-page/summary-page.jsx';
 export const App = connect(
   stateSelector({
     loading: appSelector((store) => store.loading),
-    user: appSelector((store) => store.user)
+    user: appSelector((store) => store.user),
+    userState: appSelector((store) => store.userState)
   }),
   {
     setUser: appActions.setUser,
@@ -27,6 +28,8 @@ export const App = connect(
 
   // actions
   const { setUser, setLoading, loadCalcData } = props;
+
+  console.log('the userState:', userState);
 
   useEffect(() => {
     async function fetchUser() {
