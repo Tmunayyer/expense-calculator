@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import axios from 'axios';
+
 import { stateSelector } from '../state/interface.js';
 import { appSelector } from '../app/state.js';
 import { calcSelector, calcActions } from './state.js';
@@ -148,6 +150,45 @@ const ResetButton = connect(
   return <button onClick={reset}>Reset</button>;
 });
 
+const SaveButton = connect(
+  stateSelector({
+    slider: calcSelector((store) => store.slider),
+    salary: calcSelector((store) => store.salary)
+  }),
+  null
+)(function SaveButton(props) {
+  // props
+  const { slider, salary } = props;
+
+  const save = async (payload) => {
+    const URI = '/api/calculator-data';
+    console.log('the payload:', payload);
+
+    const response = await axios({
+      method: 'post',
+      url: URI,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: payload
+    });
+    console.log('the response:', response);
+  };
+
+  return (
+    <button
+      onClick={() =>
+        save({
+          slider,
+          salary
+        })
+      }
+    >
+      Save
+    </button>
+  );
+});
+
 export const CalculatorPage = connect(
   null,
   null
@@ -163,6 +204,7 @@ export const CalculatorPage = connect(
         <Savings />
 
         <ResetButton />
+        <SaveButton />
       </PageBody>
     </PageWrapper>
   );

@@ -36,6 +36,7 @@ async function recieveGoogleRedirect(req, res) {
 
     // create the user in the DB
     const userData = await datastore.User.insertUser({
+      googleId: data.id,
       fullName: data.name,
       firstName: data.given_name,
       lastName: data.family_name

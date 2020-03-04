@@ -25,17 +25,22 @@ datastore.User = {
   },
   insertUser: async (gUserData) => {
     try {
-      const { fullName, firstName, lastName } = gUserData;
+      const { googleId, fullName, firstName, lastName } = gUserData;
 
       const insertUser = `
         insert into "user"
-            (full_name, first_name, last_name)
+            (google_id, full_name, first_name, last_name)
         values
-            ($1, $2, $3)
+            ($1, $2, $3, $4)
+        on conflict ( google_id ) do
+        update set
+          full_name = excluded.full_name,
+          first_name = excluded.first_name,
+          last_name = excluded.last_name
         returning *
     `;
 
-      const params = [fullName, firstName, lastName];
+      const params = [googleId, fullName, firstName, lastName];
 
       const result = await query(null, insertUser, params);
 
@@ -43,6 +48,43 @@ datastore.User = {
     } catch (err) {
       console.log('ERROR: inserting the user...', err);
     }
+  }
+};
+
+datastore.Calculator = {
+  getData: async (userId) => {
+    const selectData = `
+      select 
+        election, 
+        salary 
+      from calculator
+      where user_id = $1      
+    `;
+    const params = [userId];
+
+    const result = await query(null, selectData, params);
+
+    return result[0];
+  },
+  upsertData: async (data) => {
+    const { userId, election, salary } = data;
+
+    const insertData = `
+        insert into calculator
+            (user_id, election, salary)
+        values
+            ($1, $2, $3)
+        on conflict (user_id) do
+        update set
+          election = excluded.election,
+          salary = excluded.salary
+        returning *;
+    `;
+    const params = [userId, election, salary];
+
+    const result = await query(null, insertData, params);
+
+    return result[0];
   }
 };
 
