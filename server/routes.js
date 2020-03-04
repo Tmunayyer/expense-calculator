@@ -15,19 +15,7 @@ const api = {
     const user = await datastore.User.getUser(req.session.app_id);
 
     res.send({ message: 'success', data: user });
-  },
-
-  // =================
-
-  post: false,
-
-  // =================
-
-  put: false,
-
-  // =================
-
-  remove: false
+  }
 };
 
 const routes = [...authRoutes, api];

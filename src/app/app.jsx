@@ -11,33 +11,46 @@ import { CalculatorPage } from '../calculator-page/calculator-page.jsx';
 
 export const App = connect(
   stateSelector({
+    loading: appSelector((store) => store.loading),
     user: appSelector((store) => store.user)
   }),
   {
-    setUser: appActions.setUser
+    setUser: appActions.setUser,
+    setLoading: appActions.setLoading
   }
-)(function(props) {
-  const { user, setUser } = props;
+)(
+  class App extends React.PureComponent {
+    componentDidMount() {
+      const { setUser, setLoading } = this.props;
 
-  async function fetchUser() {
-    try {
-      const uri = '/api/user';
-      const { data } = await axios.get(uri);
+      async function fetchUser() {
+        try {
+          const uri = '/api/user';
+          const { data } = await axios.get(uri);
 
-      setUser(data.data);
-    } catch (err) {
-      console.log('ERROR: fetching user...', err);
-      return null;
+          setUser(data.data);
+          setLoading(false);
+        } catch (err) {
+          console.log('ERROR: fetching user...', err);
+          return null;
+        }
+      }
+
+      fetchUser();
+    }
+
+    render() {
+      const { loading, user } = this.props;
+
+      if (loading) {
+        return null;
+      }
+
+      if (!user) {
+        return <SigninPage />;
+      }
+
+      return <CalculatorPage />;
     }
   }
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  if (!user) {
-    return <SigninPage />;
-  }
-
-  return <CalculatorPage />;
-});
+);
