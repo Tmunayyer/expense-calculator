@@ -8,8 +8,17 @@ import { appSelector } from '../app/state.js';
 import { calcSelector, calcActions } from './state.js';
 
 import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
+import { WelcomeTitle } from '../component-lib/title.jsx';
+import { LabelAndValue } from '../component-lib/label-and-value.jsx';
+import { Button } from '../component-lib/button.jsx';
 import { ExpenseSlider } from './slider.jsx';
 
+/**
+ * Takes in the number and produces a currency formatted
+ *  string for display.
+ *
+ * @param {*} num
+ */
 const formatCurrency = (num) => {
   const str = num.toString();
 
@@ -56,19 +65,6 @@ const isNumber = (string) => {
   return true;
 };
 
-const WelcomeTitle = connect(
-  stateSelector({
-    user: appSelector((store) => store.user)
-  }),
-  null
-)(function WelcomeTitle(props) {
-  const { user } = props;
-
-  return (
-    <div className="welcome-title">{`Welcome to your monthly budget ${user.first_name}.`}</div>
-  );
-});
-
 const SalaryInput = connect(
   stateSelector({
     salary: calcSelector((store) => store.salary)
@@ -108,62 +104,26 @@ const SalaryInput = connect(
   );
 });
 
-const Expense = connect(
+export const CalculatorPage = connect(
   stateSelector({
-    expense: calcSelector((store) => store.expense)
-  }),
-  null
-)(function Expense(props) {
-  const { expense } = props;
-
-  return (
-    <div className="calculator-row">
-      <div>Your Expense</div>
-      <div>${formatCurrency(expense.toFixed(2))}</div>
-    </div>
-  );
-});
-
-const Savings = connect(
-  stateSelector({
+    user: appSelector((store) => store.user),
+    slider: calcSelector((store) => store.slider),
+    salary: calcSelector((store) => store.salary),
+    expense: calcSelector((store) => store.expense),
     savings: calcSelector((store) => store.savings)
   }),
-  null
-)(function Savings(props) {
-  const { savings } = props;
-
-  return (
-    <div className="calculator-row highlight-row">
-      <div>Your Savings</div>
-      <div>${formatCurrency(savings.toFixed(2))}</div>
-    </div>
-  );
-});
-
-const ResetButton = connect(
-  null,
-  { reset: calcActions.reset }
-)(function ResetButton(props) {
-  //actions
-  const { reset } = props;
-
-  return <button onClick={reset}>Reset</button>;
-});
-
-const SaveButton = connect(
-  stateSelector({
-    slider: calcSelector((store) => store.slider),
-    salary: calcSelector((store) => store.salary)
-  }),
-  null
-)(function SaveButton(props) {
+  { reset: calcActions.reset, setFinished: calcActions.setFinished }
+)(function(props) {
   // props
-  const { slider, salary } = props;
+  const { user, expense, savings, slider, salary } = props;
+
+  // actions
+  const { reset } = props;
 
   const save = async (payload) => {
     const URI = '/api/calculator-data';
 
-    const response = await axios({
+    const { message } = await axios({
       method: 'post',
       url: URI,
       headers: {
@@ -171,38 +131,44 @@ const SaveButton = connect(
       },
       params: payload
     });
+
+    if (message === 'success') {
+      setFinished(true);
+    }
   };
 
   return (
-    <button
-      onClick={() =>
-        save({
-          slider,
-          salary
-        })
-      }
-    >
-      Save
-    </button>
-  );
-});
-
-export const CalculatorPage = connect(
-  null,
-  null
-)(function(props) {
-  return (
     <PageWrapper>
       <PageBody>
-        <WelcomeTitle />
+        <WelcomeTitle
+          title={`Welcome to your monthly budget ${user.first_name}.`}
+        />
 
         <ExpenseSlider />
         <SalaryInput />
-        <Expense />
-        <Savings />
 
-        <ResetButton />
-        <SaveButton />
+        <LabelAndValue
+          label={'Your Expense'}
+          value={`$${formatCurrency(expense.toFixed(2))}`}
+        />
+        <LabelAndValue
+          highlight={true}
+          label={'Your Savings'}
+          value={`$${formatCurrency(savings.toFixed(2))}`}
+        />
+
+        <div className="calculator-actions">
+          <Button text={'reset'} nonPreferred={true} onClick={reset} />
+          <Button
+            text={'save'}
+            onClick={() =>
+              save({
+                slider,
+                salary
+              })
+            }
+          />
+        </div>
       </PageBody>
     </PageWrapper>
   );

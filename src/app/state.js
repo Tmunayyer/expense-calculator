@@ -3,21 +3,28 @@ import { mapState } from '../state/interface';
 export const [appSelector, appActions] = mapState('App', {
   initial: {
     user: null,
-    loading: true
+    loading: true,
+    userState: 'calculating' // or finished
   },
   actions: {
-    setLoading: (store, result) => {
+    setLoading: (_store, result) => {
       return {
-        ...store,
+        ..._store,
         loading: false
       };
     },
-    setUser: (store, result) => {
-      const newStoreObj = { ...store };
+    setUser: (_store, result) => {
+      const newStoreObj = { ..._store };
 
       newStoreObj.user = result;
 
       return newStoreObj;
+    },
+    setUserState: (_store, result) => {
+      return {
+        ..._store,
+        userState: result
+      };
     }
   }
 });

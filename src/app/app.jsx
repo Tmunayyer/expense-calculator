@@ -9,6 +9,7 @@ import { calcActions } from '../calculator-page/state.js';
 
 import { SigninPage } from '../signin-page/signin-page.jsx';
 import { CalculatorPage } from '../calculator-page/calculator-page.jsx';
+import { SummaryPage } from '../summary-page/summary-page.jsx';
 
 export const App = connect(
   stateSelector({
@@ -22,7 +23,7 @@ export const App = connect(
   }
 )(function App(props) {
   // props
-  const { loading, user } = props;
+  const { loading, user, userState } = props;
 
   // actions
   const { setUser, setLoading, loadCalcData } = props;
@@ -38,6 +39,7 @@ export const App = connect(
           // we have a user, pre-emptively grab potential calculator data
           const calcDataURI = '/api/calculator-data';
           const { data: calculator } = await axios.get(calcDataURI);
+
           loadCalcData(calculator.data);
         }
 
@@ -57,6 +59,10 @@ export const App = connect(
 
   if (!user) {
     return <SigninPage />;
+  }
+
+  if (userState === 'finished') {
+    return <SummaryPage />;
   }
 
   return <CalculatorPage />;
