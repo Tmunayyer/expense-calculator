@@ -98,3 +98,7 @@ body {
   padding-bottom: 1em;
   font-weight: bold;
 }
+
+.slider-container {
+  width: 35%;
+}

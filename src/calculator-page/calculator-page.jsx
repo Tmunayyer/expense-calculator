@@ -5,6 +5,7 @@ import { stateSelector } from '../state/interface.js';
 import { appSelector } from '../app/state.js';
 
 import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
+import { ExpenseSlider } from './slider.jsx';
 
 const WelcomeTitle = connect(
   stateSelector({
@@ -27,7 +28,7 @@ export const CalculatorPage = connect(
     <PageWrapper>
       <PageBody>
         <WelcomeTitle />
-        {/* slider */}
+        <ExpenseSlider />
         {/* input salary */}
         {/* expense calc */}
         {/* saving calc */}
