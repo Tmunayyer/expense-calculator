@@ -1,3 +1,5 @@
+// central location to map the endpoints and their handlers to the express app.
+
 const { authRoutes } = require('./auth.js');
 const datastore = require('./datastore.js');
 

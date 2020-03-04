@@ -28,7 +28,7 @@ helpers.generateToken = (code, cb) => {
 helpers.getAuthURI = (cb) => {
   /**
    * pretty sure they are just formatting a string for us here
-   *  wchich is why there is no call back needed and no use of
+   *  which is why there is no call back needed and no use of
    *  reject
    */
   return new Promise((accept, reject) => {

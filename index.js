@@ -1,3 +1,5 @@
+// the location to initalize the backend.
+
 require('dotenv').config();
 
 const express = require('express');

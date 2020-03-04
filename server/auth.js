@@ -1,3 +1,5 @@
+// define and export all endpoints required for auth workflows to centralize the logic
+
 const google = require('./utility/google');
 const datastore = require('./datastore.js');
 

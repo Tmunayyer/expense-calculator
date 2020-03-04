@@ -1,3 +1,5 @@
+// central location for middleware to be applied to the express app.
+
 const express = require('express');
 const pool = require('../database/connect');
 
