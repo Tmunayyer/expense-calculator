@@ -1,12 +1,13 @@
-DROP TABLE "user";
 DROP TABLE "calculator";
+DROP TABLE "user";
 
 CREATE TABLE "user" (
     id serial primary key,
     google_id text UNIQUE,
     full_name varchar(255),
     first_name varchar(255),
-    last_name varchar(255)
+    last_name varchar(255),
+    avatar text
 );
 
 CREATE TABLE "calculator" (

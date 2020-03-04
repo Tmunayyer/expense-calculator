@@ -77,7 +77,7 @@ body {
 }
 
 .link-as-button {
-  background-color: white;
+  background-color: transparent;
   color: black;
   padding: 1em 1.5em;
   padding-top: 1.75em;

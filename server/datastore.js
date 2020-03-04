@@ -16,7 +16,8 @@ datastore.User = {
             id,
             full_name,
             first_name,
-            last_name
+            last_name,
+            avatar
         from "user"
         where id = $1;
     `;
@@ -28,22 +29,23 @@ datastore.User = {
   },
   insertUser: async (gUserData) => {
     try {
-      const { googleId, fullName, firstName, lastName } = gUserData;
+      const { googleId, fullName, firstName, lastName, avatar } = gUserData;
 
       const insertUser = `
         insert into "user"
-            (google_id, full_name, first_name, last_name)
+            (google_id, full_name, first_name, last_name, avatar)
         values
-            ($1, $2, $3, $4)
+            ($1, $2, $3, $4, $5)
         on conflict ( google_id ) do
         update set
           full_name = excluded.full_name,
           first_name = excluded.first_name,
-          last_name = excluded.last_name
+          last_name = excluded.last_name,
+          avatar = excluded.avatar
         returning *
     `;
 
-      const params = [googleId, fullName, firstName, lastName];
+      const params = [googleId, fullName, firstName, lastName, avatar];
 
       const result = await query(null, insertUser, params);
 

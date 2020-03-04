@@ -14,6 +14,11 @@ const api = [
 
       const user = await datastore.User.getUser(req.session.app_id);
 
+      if (!user) {
+        res.send({ message: 'no user' });
+        return;
+      }
+
       res.send({ message: 'success', data: user });
     }
   },
@@ -27,6 +32,11 @@ const api = [
         const userId = req.session.app_id;
 
         const data = await datastore.Calculator.getData(userId);
+
+        if (!data) {
+          res.send({ message: 'no data' });
+          return;
+        }
 
         res.send({ message: 'success', data: data });
       } catch (err) {

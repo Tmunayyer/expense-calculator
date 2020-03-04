@@ -29,8 +29,6 @@ export const App = connect(
   // actions
   const { setUser, setLoading, loadCalcData } = props;
 
-  console.log('the userState:', userState);
-
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -43,7 +41,9 @@ export const App = connect(
           const calcDataURI = '/api/calculator-data';
           const { data: calculator } = await axios.get(calcDataURI);
 
-          loadCalcData(calculator.data);
+          if (calculator.message === 'success') {
+            loadCalcData(calculator.data);
+          }
         }
 
         setLoading(false);
