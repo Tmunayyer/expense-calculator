@@ -3,9 +3,29 @@ import { connect } from 'react-redux';
 
 import { stateSelector } from '../state/interface.js';
 import { appSelector } from '../app/state.js';
+import { calcSelector, calcActions } from './state.js';
 
 import { PageWrapper, PageBody } from '../component-lib/pages.jsx';
 import { ExpenseSlider } from './slider.jsx';
+
+/**
+ * Validation to ensure the input is in fact a number. We cant
+ *  rely on parseInt alone since 100abc will return 100.
+ *
+ * @param {string} string
+ */
+const isNumber = (string) => {
+  for (let i = 0; i < string.length; i++) {
+    // account for decimal
+    if (string[i] === '.') continue;
+
+    const num = parseInt(string[i]);
+    if (isNaN(num)) {
+      return false;
+    }
+  }
+  return true;
+};
 
 const WelcomeTitle = connect(
   stateSelector({
@@ -20,6 +40,37 @@ const WelcomeTitle = connect(
   );
 });
 
+const SalaryInput = connect(
+  stateSelector({
+    salary: calcSelector((store) => store.salary)
+  }),
+  {
+    setSalary: calcActions.setSalary
+  }
+)(function SalaryInput(props) {
+  // props
+  const { salary } = props;
+
+  // actions
+  const { setSalary } = props;
+
+  return (
+    <>
+      <input
+        value={salary}
+        onChange={(e) => {
+          const { value } = e.target;
+
+          if (isNumber(value)) {
+            return setSalary(value);
+          }
+        }}
+      />
+      <span>Numbers Only</span>
+    </>
+  );
+});
+
 export const CalculatorPage = connect(
   null,
   null
@@ -29,7 +80,7 @@ export const CalculatorPage = connect(
       <PageBody>
         <WelcomeTitle />
         <ExpenseSlider />
-        {/* input salary */}
+        <SalaryInput />
         {/* expense calc */}
         {/* saving calc */}
 
