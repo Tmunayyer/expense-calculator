@@ -99,6 +99,50 @@ body {
   font-weight: bold;
 }
 
+.welcome-title {
+  font-size: 2.5em;
+}
+
 .slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
   width: 35%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.calculator-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 250px;
+  height: 30px;
+
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.highlight-row {
+  border: solid 1px lightgrey;
+  box-shadow: 1px 1px 1px lightgrey;
+}
+
+.calculator-input {
+  padding: 8px;
+  display: flex;
+
+  font-size: 16px;
+  font-family: times;
+
+  text-align: right;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 50%;
 }

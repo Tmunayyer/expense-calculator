@@ -23,7 +23,19 @@ export const ExpenseSlider = connect(
 
   return (
     <div className="slider-container">
+      <div>Election</div>
       <Slider
+        marks={{
+          0: {
+            style: {
+              width: '100px !important'
+            },
+            label: 'Min: 0%'
+          },
+          30: {
+            label: 'Max: 30%'
+          }
+        }}
         min={0}
         max={30}
         startPoint={0}

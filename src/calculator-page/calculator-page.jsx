@@ -81,11 +81,19 @@ const SalaryInput = connect(
   // actions
   const { setSalary } = props;
 
+  let displaySalary = salary;
+  if (displaySalary === 0) {
+    displaySalary = '';
+  }
+
   return (
-    <>
-      <span>Your Salary</span>
+    <div className="calculator-row">
+      <div>Your Salary</div>
       <input
-        value={salary}
+        className="calculator-input"
+        type="text"
+        value={displaySalary}
+        placeholder={'100000'}
         onChange={(e) => {
           const { value } = e.target;
 
@@ -94,8 +102,7 @@ const SalaryInput = connect(
           }
         }}
       />
-      <span>Numbers Only</span>
-    </>
+    </div>
   );
 });
 
@@ -108,10 +115,10 @@ const Expense = connect(
   const { expense } = props;
 
   return (
-    <>
+    <div className="calculator-row">
       <div>Your Expense</div>
       <div>${formatCurrency(expense.toFixed(2))}</div>
-    </>
+    </div>
   );
 });
 
@@ -124,10 +131,10 @@ const Savings = connect(
   const { savings } = props;
 
   return (
-    <>
+    <div className="calculator-row highlight-row">
       <div>Your Savings</div>
       <div>${formatCurrency(savings.toFixed(2))}</div>
-    </>
+    </div>
   );
 });
 
