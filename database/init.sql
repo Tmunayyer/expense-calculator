@@ -1,5 +1,4 @@
-DROP TABLE "calculator";
-DROP TABLE "user";
+CREATE DATABASE expense_calculator;
 
 CREATE TABLE "user" (
     id serial primary key,
