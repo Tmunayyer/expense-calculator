@@ -1,6 +1,6 @@
 // some functions to reduce boiler plate code to talk to the database
 
-const pool = require('./connect.js');
+const pool = require('./connect.js').pool();
 
 /**
  * export this incase we want to implement transactions

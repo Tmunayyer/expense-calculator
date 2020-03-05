@@ -5,33 +5,38 @@ const fs = require('fs');
 
 let pool;
 
-if (process.env.MODE === 'development') {
-  pool = new Pool();
-} else {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-  });
+const init = (cb) => {
+  if (process.env.MODE === 'development') {
+    pool = new Pool();
 
-  const text = fs.readFileSync('./database/init.sql').toString();
+    cb();
+  } else {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: true
+    });
 
-  pool.connect((err, client) => {
-    if (err) {
-      throw new Error(err);
-    }
-    client.query(text, (err, data) => {
+    const text = fs.readFileSync('./database/init.sql').toString();
+
+    pool.connect((err, client) => {
       if (err) {
         throw new Error(err);
       }
+      client.query(text, (err, data) => {
+        if (err) {
+          throw new Error(err);
+        }
 
-      client.release();
+        client.release();
+        cb();
+      });
     });
+  }
+
+  pool.on('error', (err) => {
+    console.error('Unexpected error on idle client', err);
+    process.exit(-1);
   });
-}
+};
 
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
-});
-
-module.exports = pool;
+module.exports = { pool: () => pool, poolInit: init };
