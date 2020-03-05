@@ -33,7 +33,7 @@ Running the application locally or deploying to Heroku requires pre-requisite st
 
 ## Installing Locally
 
-### Prerequisites
+### Local Prerequisites
 
 To run this locally there are two prerequisites: [Node](https://nodejs.org/en/download/) and a local version of [PostgreSQL](https://www.postgresql.org/download/). (This is assuming you already have [Git](https://help.github.com/en/github/getting-started-with-github/set-up-git).)
 
@@ -97,7 +97,7 @@ $ npm start
 heroku create
 ```
 
-4. Navigate to the Heroku console and find the application. Retrieve the public URI that you are able to access the application from under the setting tab. Scroll down to the domains sections and retrieve the URI.
+4. Navigate to the Heroku console and find the application. Retrieve the public URI that you are able to access the application from under the setting tab.
 
 5. Register the Heroku domain with [Google](https://console.developers.google.com/).
 
@@ -127,6 +127,8 @@ GOOGLE_REDIRECT=YOUR GOOGLE REDIRECT
 $ git push heroku master
 ```
 
+9. As changes are made, any updates can be deployed by pushing to heroku master (above command)
+
 ## Notes
 
 While building this application I experimented with implementing a Redux interface I have used before. It makes things quite convenient when adding components and managing many different branches of state. The implementation was new to me and could possibly be refined to be clearer or more performant. Setting this up took the most time out of all other features but made state managment and Redux very easy to use.
@@ -141,5 +143,5 @@ There is some key functionality missing due to time constraints. Here they are i
 
 1. The user needs to be able to log out.
 2. An interface for API calls from the frontend needs to be more robust and standard. For the small amount we have, there is already enough variance to warrant some abstraction. This could include the introduction of Saga or Thunk as Redux middleware or just a small library to standardize the calls.
-3. There is currently no approach to styling. Everything is dumped into main.css. I would explore having styling sheets for each "page" of the application or implement the styled-components library.
+3. There is currently no approach to styling. Everything is dumped into main.css file. I would explore having styling sheets for each "page" of the application or implement the styled-components library.
 4. Although this is a single page application we already have a few different "pages". It would be ideal to implement React Router so we can have some persistence on refresh and the ability to use browser navigation. It would also cleanup the main App component.
